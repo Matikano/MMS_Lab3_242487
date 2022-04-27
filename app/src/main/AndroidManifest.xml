@@ -11,8 +11,8 @@
         android:theme="@style/Theme.MMS_Lab3_242487">
 
         <meta-data
-            android:name="com.google.firebase.ml.vision.DEPENDENCIES"
-            android:value="label"/>
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="ica"/>
 
         <activity
             android:name=".MainActivity"

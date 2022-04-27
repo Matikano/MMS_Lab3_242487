@@ -1,5 +1,6 @@
 package pl.edu.pwr.lab3.i242487
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -7,8 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageProxy
+import androidx.core.graphics.get
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabeling
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import pl.edu.pwr.lab3.i242487.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         const val PICK_PHOTO_REQUEST_CODE = 101
     }
 
-    private lateinit var mBinding: ActivityMainBinding
+    protected lateinit var mBinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +39,9 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if(resultCode == Activity.RESULT_OK){
+
             when(requestCode){
+
                 PICK_PHOTO_REQUEST_CODE -> {
                     val bitmap = getImageFromData(data)
                     bitmap?.apply{
@@ -54,22 +61,46 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun processImageTagging(bitmap: Bitmap){
-        val visionImg = FirebaseVisionImage.fromBitmap(bitmap)
-        val labeler = FirebaseVision.getInstance()
-            .getOnDeviceImageLabeler().processImage(visionImg)
-            .addOnSuccessListener {
-                tags ->
-                mBinding.tvImageLabel.text = tags.joinToString(" "){ it.text }
+        val image =  InputImage.fromBitmap(bitmap, 0)
+
+        val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
+        labeler.process(image)
+            .addOnSuccessListener { tags ->
+                mBinding.tvImageLabel.text = tags.joinToString(" "){ it.text}
             }
-            .addOnFailureListener {
-                ex -> Log.wtf("LAB", ex)
+            .addOnFailureListener{
+                    ex -> Log.wtf("LAB", ex)
             }
     }
 
     private fun pickImageFromGallery(){
+
         val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = "image/*"
         }
+
         startActivityForResult(intent, PICK_PHOTO_REQUEST_CODE)
+    }
+
+    private inner class MyImageAnalyzer : ImageAnalysis.Analyzer {
+
+        @SuppressLint("UnsafeOptInUsageError")
+        override fun analyze(imageProxy: ImageProxy) {
+            val mediaImage = imageProxy.image
+            mediaImage?.let { _ ->
+                val image =  InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+                val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
+                labeler.process(image)
+                    .addOnSuccessListener { tags ->
+                        mBinding.tvImageLabel.text = tags.joinToString(" "){ it.text}
+                    }
+                    .addOnFailureListener{
+                        ex -> Log.wtf("LAB", ex)
+                    }
+                    .addOnCompleteListener{
+                        imageProxy.close()
+                    }
+            }
+        }
     }
 }
