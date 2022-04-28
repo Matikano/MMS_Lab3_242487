@@ -1,4 +1,4 @@
-package pl.edu.pwr.lab3.i242487
+package pl.edu.pwr.lab3.i242487.view.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -10,24 +10,25 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
-import androidx.core.graphics.get
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
-import pl.edu.pwr.lab3.i242487.databinding.ActivityMainBinding
+import pl.edu.pwr.lab3.i242487.databinding.ExampleActivityBinding
 
-class MainActivity : AppCompatActivity() {
+class ExampleActivity : AppCompatActivity() {
 
     companion object {
         const val PICK_PHOTO_REQUEST_CODE = 101
     }
 
-    protected lateinit var mBinding: ActivityMainBinding
+    protected lateinit var mBinding: ExampleActivityBinding
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        mBinding = ExampleActivityBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
         mBinding.bPickImage.setOnClickListener {

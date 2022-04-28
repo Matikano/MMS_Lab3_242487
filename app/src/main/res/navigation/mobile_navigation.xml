@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_camera">
+
+    <fragment
+        android:id="@+id/navigation_camera"
+        android:name="pl.edu.pwr.lab3.i242487.view.fragment.CameraFragment"
+        android:label="@string/camera"
+        tools:layout="@layout/fragment_camera" />
+
+    <fragment
+        android:id="@+id/navigation_text"
+        android:name="pl.edu.pwr.lab3.i242487.view.fragment.TextFragment"
+        android:label="@string/text"
+        tools:layout="@layout/fragment_text" />
+
+    <fragment
+        android:id="@+id/navigation_objects"
+        android:name="pl.edu.pwr.lab3.i242487.view.fragment.ObjectsFragment"
+        android:label="@string/objects"
+        tools:layout="@layout/fragment_objects" />
+</navigation>

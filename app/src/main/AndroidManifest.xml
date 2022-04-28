@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pl.edu.pwr.lab3.i242487">
 
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,19 +15,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MMS_Lab3_242487">
-
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="ica"/>
-
+            android:value="ica, ocr" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.activity.MainActivity"
+            android:label="@string/title_activity_main"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.activity.ExampleActivity"
+            android:exported="true">
         </activity>
     </application>
 

@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">MMS_Lab3_242487</string>
     <string name="b_pick_iamge">Pick Image</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="camera">Camera</string>
+    <string name="text">Text</string>
+    <string name="objects">objects</string>
+    <string name="permissions_not_granted">Permission not granted.</string>
+    <string name="tv_labels">Labels: %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
