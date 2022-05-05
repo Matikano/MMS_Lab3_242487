@@ -124,7 +124,10 @@ class ObjectsFragment : CameraPreviewFragment() {
 
                 objectDetector.process(image)
                     .addOnSuccessListener {
-                        results -> results.forEach{
+                        results ->
+                        Log.i("OBJECT DETECTOR ", "Detected objects: ${results.size}")
+                        overlay.clear()
+                        results.forEach{
                             result -> overlay.add(ObjectGraphic(overlay, result))
                                 Log.i("ObjectDetector - labels", result.labels.joinToString { it.text })
                         }
@@ -133,6 +136,7 @@ class ObjectsFragment : CameraPreviewFragment() {
                             ex -> Log.wtf("LAB", ex)
                     }
                     .addOnCompleteListener{
+                        imageProxy.close()
                     }
             }
         }

@@ -95,6 +95,7 @@ public class GraphicOverlay(context: Context, attributeSet: AttributeSet) : View
 
         val viewAspectRatio = (width / height).toFloat()
         val imageAspectRatio = (imageWidth / imageHeight).toFloat()
+
         postScaleHeightOffset = 0f
         postScaleWidthOffset = 0f
 
