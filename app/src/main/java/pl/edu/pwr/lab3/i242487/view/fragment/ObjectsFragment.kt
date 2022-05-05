@@ -125,7 +125,6 @@ class ObjectsFragment : CameraPreviewFragment() {
                 objectDetector.process(image)
                     .addOnSuccessListener {
                         results ->
-                        Log.i("OBJECT DETECTOR ", "Detected objects: ${results.size}")
                         overlay.clear()
                         results.forEach{
                             result -> overlay.add(ObjectGraphic(overlay, result))
@@ -185,8 +184,10 @@ class ObjectsFragment : CameraPreviewFragment() {
                 else abs(detectedObject.trackingId!! % NUM_COLORS)
 
             val rect = RectF(detectedObject.boundingBox)
+
             val x0 = translateX(rect.left)
             val x1 = translateX(rect.right)
+
             rect.left = min(x0, x1)
             rect.right = max(x0, x1)
             rect.top = translateY(rect.top)

@@ -93,18 +93,18 @@ public class GraphicOverlay(context: Context, attributeSet: AttributeSet) : View
         if(!needUpdateTransformation || imageWidth <= 0 || imageHeight <= 0)
             return
 
-        val viewAspectRatio = (width / height).toFloat()
-        val imageAspectRatio = (imageWidth / imageHeight).toFloat()
+        val viewAspectRatio: Float = (width / height).toFloat()
+        val imageAspectRatio: Float = (imageWidth / imageHeight).toFloat()
 
         postScaleHeightOffset = 0f
         postScaleWidthOffset = 0f
 
         if(viewAspectRatio > imageAspectRatio){
             scaleFactor = (width / imageWidth).toFloat()
-            postScaleHeightOffset =  (width / imageAspectRatio - height) / 2
+            postScaleHeightOffset =  ((width / imageAspectRatio) - height) / 2
         } else {
             scaleFactor = (height / imageHeight).toFloat()
-            postScaleWidthOffset = (height * imageAspectRatio - width) / 2
+            postScaleWidthOffset = ((height * imageAspectRatio) - width) / 2
         }
 
         transformationMatrix.apply {
